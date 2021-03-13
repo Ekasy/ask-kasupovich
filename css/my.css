@@ -104,7 +104,15 @@ main > .container {
   margin-top: 20px;
   display: block;
 }
-
+.pagination > .page-item > .threedot {
+  border: none;
+  border-left: 1px solid #dee2e6;
+  cursor:default;
+}
+.pagination > .page-item > .threedot:hover {
+  background-color: white;
+  border-right: 1px solid #dee2e6;
+}
 
 
 .right-side {
