@@ -100,6 +100,10 @@ main > .container {
   padding: 15px;
   margin: 0 auto;
 }
+.form-signin > .create-account {
+  margin-top: 20px;
+  display: block;
+}
 
 
 
