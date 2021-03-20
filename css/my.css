@@ -115,6 +115,11 @@ main > .container {
 }
 
 
+.needs-validation > button {
+  margin-bottom: 20px;
+}
+
+
 .right-side {
     margin-top: 20px;
     padding-left: 50px;
