@@ -1,0 +1,41 @@
+{% load static %}
+
+<div class="row question">
+    <div class="col-3">
+        <img src="{% static 'img/avatar.png' %}">
+        <div class="row question-rating">
+            <div class="col-7 count">
+                5
+            </div>
+            <div class="col-5 regs">
+                <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
+                       width="15" height="15">
+                <input type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}" alt="submit" width="15"
+                       height="15">
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <a href="{% url 'one_question' pk=question.id %}">
+                <h2>{{ question.title }}</h2>
+            </a>
+            <div>
+                {{ question.text }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <a href="#">answer (3)</a>
+            </div>
+            <div class="col-1">
+                Tags:
+            </div>
+            <div class="col-9">
+                {% for tag in question.tags %}
+                    <a href="{% url 'questions_by_tag' name=tag.name %}" class="question-tag">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

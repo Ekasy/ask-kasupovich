@@ -1,0 +1,51 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h2 class="caption">Sign Up</h2>
+    <form class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="title">Login</label>
+            <input type="text" class="form-control" id="login" placeholder="Login" required>
+            <div class="invalid-feedback">
+                Please, enter a login.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="text">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+            <div class="invalid-feedback">
+                Please, enter a email.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="text">Nickname</label>
+            <input type="text" class="form-control" id="nickname" required>
+            <div class="invalid-feedback">
+                Please, enter a nickname.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" required>
+            <div class="invalid-feedback">
+                Please, enter a password.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="text">Nickname</label>
+            <input type="password" class="form-control" id="rep_password" required>
+            <div class="invalid-feedback">
+                Please, enter a correct password.
+            </div>
+        </div>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile">
+            <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">
+            Register!
+        </button>
+    </form>
+{% endblock %}

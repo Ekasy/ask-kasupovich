@@ -1,0 +1,16 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="question-label">
+        <a href="{% url 'new_questions' %}">New Questions</a>
+        <a href="{% url 'hot_questions' %}" class="active">Hot Questions</a>
+    </div>
+
+    {% for question in questions %}
+        {% include "include/question.html" %}
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% include "include/pagination.html" %}
+{% endblock content %}

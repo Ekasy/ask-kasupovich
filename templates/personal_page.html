@@ -1,0 +1,41 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="caption">Settings: {{ personal_info.name }}</h2>
+<form class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="title">Login</label>
+        <input type="text" class="form-control" id="login" placeholder="Login" value="{{ personal_info.login }}" required>
+        <div class="invalid-feedback">
+            Please, enter a login.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="text">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Email" value="{{ personal_info.email }}" required>
+        <div class="invalid-feedback">
+            Please, enter a text.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="text">Nickname</label>
+        <input type="text" class="form-control" id="nickname" placeholder="Nickname" value="{{ personal_info.nickname }}" required>
+        <div class="invalid-feedback">
+            Please, enter a text.
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="upload-avatar">Upload avatar</div>
+        <img src="{% static 'img/avatar.png' %}" width="150" height="150">
+    </div>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+    </div>
+    <hr class="mb-4">
+    <button class="btn btn-primary btn-lg btn-block" type="submit">
+        Save
+    </button>
+</form>
+{% endblock %}

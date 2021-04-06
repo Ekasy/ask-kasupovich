@@ -1,0 +1,29 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+    <form class="form-signin">
+        <h2 class="caption">Log In</h2>
+        <div style="visibility: visible; color: red;">Incorrect password</div>
+        <div class="mb-3">
+            <label for="title">Login</label>
+            <input type="text" class="form-control" id="login" placeholder="Login" required>
+            <div class="invalid-feedback">
+                Please, enter a login.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="text">Password</label>
+            <input type="password" class="form-control" id="password" required>
+            <div class="invalid-feedback">
+                Please, enter a password.
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" type="submit">
+            Log in!
+        </button>
+
+        <a class="create-account" href="#">create new account</a>
+    </form>
+{% endblock %}

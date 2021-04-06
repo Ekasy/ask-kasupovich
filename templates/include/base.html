@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sticky Footer Navbar Template · Bootstrap v5.0</title>
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/my.css' %}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    {% include "include/navbar.html" %}
+
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+
+                    {% block content %}
+                    {% endblock content %}
+
+
+                </div>
+                <div class="col-4 right-side">
+                    <div class="col popular-tags">
+                        <div>
+                            <h3>Popular Tags</h3>
+                        </div>
+
+                        {% for pop_tag in popular_tags %}
+                            <h4><a href="{% url 'questions_by_tag' name=pop_tag.name %}">{{ pop_tag.name }}</a></h4>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col best-members">
+                        <div>
+                            <h3>Best Members</h3>
+                        </div>
+
+                        <p><a href="#">Mr. Freedman</a></p>
+                        <p><a href="#">Dr. House</a></p>
+                        <p><a href="#">Queen Victoria</a></p>
+                        <p><a href="#">Edin Kasupovich</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/my.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="row question">
+    <div class="col-3">
+        <img src="{% static 'img/avatar.png' %}">
+        <div class="row question-rating">
+            <div class="col-7 count">
+                5
+            </div>
+            <div class="col-5 regs">
+                <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
+                       width="15" height="15">
+                <input type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}" alt="submit" width="15"
+                       height="15">
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <div>
+                {{ comment.text }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-check mycheckbox">
+                <input class="form-check-input" type="checkbox" id="checkCorrect1">
+                <label class="form-check-label" for="checkCorrect1">
+                    Correct!
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

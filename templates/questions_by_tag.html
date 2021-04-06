@@ -1,0 +1,15 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="question-label">
+        <a href="{% url 'questions_by_tag' name=tag.name %}" class="active">{{ tag.name }}</a>
+    </div>
+
+    {% for question in questions %}
+        {% include "include/question.html" %}
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% include "include/pagination.html" %}
+{% endblock content %}
