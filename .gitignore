@@ -4,3 +4,5 @@ node_modules/
 .vscode/
 *.pyc
 __pycache__/
+package-lock.json
+package.json
