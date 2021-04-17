@@ -8,7 +8,7 @@
         <img src="{% static 'img/avatar.png' %}">
         <div class="row question-rating">
             <div class="col-7 count">
-                5
+                {{ question.mark }}
             </div>
             <div class="col-5 regs">
                 <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <a href="#">answer (3)</a>
+                <a>answer ({{ question.answer_count }})</a>
             </div>
             <div class="col-1">
                 Tags:

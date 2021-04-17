@@ -60,10 +60,9 @@
                             <h3>Best Members</h3>
                         </div>
 
-                        <p><a href="#">Mr. Freedman</a></p>
-                        <p><a href="#">Dr. House</a></p>
-                        <p><a href="#">Queen Victoria</a></p>
-                        <p><a href="#">Edin Kasupovich</a></p>
+                        {% for member in best_members %}
+                            <p><a>{{ member }}</a></p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
