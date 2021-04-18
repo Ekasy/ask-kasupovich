@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.db.utils import IntegrityError
 from app.models import *
 from random import randint
 from faker import *
@@ -67,13 +68,16 @@ class Command(BaseCommand):
             for _ in range(questions_num):
                 if randint(0, 1) == 1:
                     question_id = randint(1, questions_num)
-                    like = Like(content_object=Question.objects.get(pk=question_id),
-                                vote=1,
-                                user=User.objects.get(pk=randint(1, users_num)))
-                    question = Question.objects.get(pk=question_id)
-                    question.rating += 1
-                    question.save()
-                    like.save()
+                    try:
+                        like = Like(content_object=Question.objects.get(pk=question_id),
+                                    vote=1,
+                                    user=User.objects.get(pk=randint(1, users_num)))
+                        question = Question.objects.get(pk=question_id)
+                        question.rating += 1
+                        question.save()
+                        like.save()
+                    except IntegrityError:
+                        pass
 
     def handle(self, *args, **options):
         fake = Faker()

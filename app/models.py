@@ -103,3 +103,6 @@ class Like(models.Model):
     content_object = GenericForeignKey()
 
     objects = LikeManager()
+
+    class Meta:
+        unique_together = ('user', 'content_type', 'object_id',)
