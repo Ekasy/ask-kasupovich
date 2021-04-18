@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="question-label">
-        <a href="{% url 'questions_by_tag' name=tag.name %}" class="active">{{ tag.name }}</a>
+        <a href="{% url 'questions_by_tag' tag_name=tag.tag %}" class="active">{{ tag.tag }}</a>
     </div>
 
     {% for question in questions %}

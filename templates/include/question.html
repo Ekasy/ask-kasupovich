@@ -5,7 +5,7 @@
         <img src="{% static 'img/avatar.png' %}">
         <div class="row question-rating">
             <div class="col-7 count">
-                {{ question.mark }}
+                {{ question.rating }}
             </div>
             <div class="col-5 regs">
                 <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
@@ -32,8 +32,8 @@
                 Tags:
             </div>
             <div class="col-9">
-                {% for tag in question.tags %}
-                    <a href="{% url 'questions_by_tag' name=tag.name %}" class="question-tag">{{ tag.name }}</a>
+                {% for tag in question.tags.all %}
+                    <a href="{% url 'questions_by_tag' tag_name=tag.tag %}" class="question-tag">{{ tag.tag }}</a>
                 {% endfor %}
             </div>
         </div>

@@ -51,7 +51,7 @@
                         </div>
 
                         {% for pop_tag in popular_tags %}
-                            <h4><a href="{% url 'questions_by_tag' name=pop_tag.name %}">{{ pop_tag.name }}</a></h4>
+                            <h4><a href="{% url 'questions_by_tag' tag_name=pop_tag.tag %}">{{ pop_tag.tag }}</a></h4>
                         {% endfor %}
                     </div>
 
