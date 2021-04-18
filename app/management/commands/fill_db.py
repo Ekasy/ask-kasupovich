@@ -36,7 +36,7 @@ class Command(BaseCommand):
             question.save()
 
             tag_num = randint(0, 10)
-            for _ in range(questions_num):
+            for _ in range(tag_num):
                 question.tags.add(Tag.objects.get(pk=tags_id[randint(0, tags_id.count() - 1)]))
             question.save()
 
