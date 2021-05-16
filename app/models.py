@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, F
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
@@ -75,7 +75,8 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=16)
-    avatar = models.FileField(upload_to=user_directory_path)
+    avatar = models.FileField(upload_to='avatar/%Y/%m/%d', default='avatar.png')
+    # avatar = models.FileField(upload_to=user_directory_path)
 
     objects = ProfileManager()
 
@@ -92,9 +93,54 @@ class LikeManager(models.Manager):
     def sum_rating(self):
         return self.get_queryset().aggregate(Sum('vote')).get('vote_sum') or 0
 
+    def get_increment(self, action):
+        return 1 if action == 'like' else -1
+
+    def like_handler(self, request):
+        data = request.POST
+        pk = int(data.get('pk', -1))
+        action = data.get('action', '')
+        if pk == -1 or action == '':
+            return 0
+        inc = self.get_increment(action)
+
+        content = data.get('content')
+        if content == 'question':
+            q = Question.objects.get(pk=pk)
+            try:
+                q_set = Question.objects.filter(id=pk)
+                q_type = ContentType.objects.get_for_model(Question)
+                obj = self.get(content_type__pk=q_type.id, object_id__in=q_set, user=request.user)
+                inc = 0 if inc == obj.vote else 2 if obj.vote == -1 else -2
+                obj.vote = self.get_increment(action)
+                obj.save()
+            except:
+                like = Like(content_object=q, vote=inc, user=request.user)
+                like.save()
+
+            q.rating = F('rating') + inc
+            q.save()
+            return Question.objects.get(pk=pk).rating
+        elif content == 'answer':
+            a = Answer.objects.get(pk=pk)
+            try:
+                a_set = Answer.objects.filter(id=pk)
+                a_type = ContentType.objects.get_for_model(Answer)
+                obj = self.get(content_type__pk=a_type.id, object_id__in=a_set, user=request.user)
+                inc = 0 if inc == obj.vote else 2 if obj.vote == -1 else -2
+                obj.vote = self.get_increment(action)
+                obj.save()
+            except:
+                like = Like(content_object=a, vote=inc, user=request.user)
+                like.save()
+
+            a.rating = F('rating') + inc
+            a.save()
+            return Answer.objects.get(pk=pk).rating
+
 
 class Like(models.Model):
-    votes = ((1, 'Like'), (-1, 'Dislike'))
+    votes = ((1, 'like'), (-1, 'dislike'))
     vote = models.IntegerField(choices=votes)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

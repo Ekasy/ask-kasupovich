@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from app import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='new_questions'),
@@ -24,7 +27,15 @@ urlpatterns = [
     path('ask/', views.new_question, name='new_question'),
     path('question/<int:pk>/', views.one_question, name='one_question'),
     path('tag/<slug:tag_name>/', views.questions_by_tag, name='questions_by_tag'),
+
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('personal_page/', views.personal_page, name='personal_page'),
+    path('logout/', views.logout, name='logout'),
+    path('settings/', views.settings, name='settings'),
+
+    path('vote/', views.vote, name='vote'),
+    path('correct/', views.correct, name='correct'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

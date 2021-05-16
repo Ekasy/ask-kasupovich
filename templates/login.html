@@ -1,7 +1,26 @@
 {% extends "include/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
+<br><h2>Log in</h2>
+
+<form class="form mt-5" action="/login/?continue={{ request.GET.next }}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            Login
+        </button>
+    {% endbuttons %}
+</form>
+
+<br>
+<a class="create-account" href="{% url 'signup' %}">create new account</a>
+{% endblock content %}
+
+<!--
+block content
     <form class="form-signin">
         <h2 class="caption">Log In</h2>
         <div style="visibility: visible; color: red;">Incorrect password</div>
@@ -26,4 +45,5 @@
 
         <a class="create-account" href="{% url 'signup' %}">create new account</a>
     </form>
-{% endblock %}
+endblock
+-->

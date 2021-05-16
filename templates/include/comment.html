@@ -4,14 +4,16 @@
     <div class="col-3">
         <img src="{% static 'img/avatar.png' %}">
         <div class="row question-rating">
-            <div class="col-7 count">
+            <div class="col-7 count" id="answer-{{ comment.id }}">
                 {{ comment.rating }}
             </div>
             <div class="col-5 regs">
-                <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
-                       width="15" height="15">
-                <input type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}" alt="submit" width="15"
-                       height="15">
+                <input class="js-vote" type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}"
+                       alt="submit" width="15" height="15"
+                       data-action="dislike" data-id="{{ comment.id }}" data-content="answer">
+                <input class="js-vote" type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}"
+                       alt="submit" width="15" height="15"
+                       data-action="like" data-id="{{ comment.id }}" data-content="answer">
             </div>
         </div>
     </div>
@@ -23,8 +25,24 @@
         </div>
         <div class="row">
             <div class="form-check mycheckbox">
-                <input class="form-check-input" type="checkbox" id="checkCorrect1">
-                <label class="form-check-label" for="checkCorrect1">
+                {% if comment.question.profile.id == request.user.profile.id %}
+                    {% if comment.is_correct == True %}
+                        <input class="form-check-input js-correct" type="checkbox" id="is_correct-{{ comment.pk }}"
+                               data-id="{{ comment.pk }}" checked>
+                    {% else %}
+                        <input class="form-check-input js-correct" type="checkbox" id="is_correct-{{ comment.pk }}"
+                               data-id="{{ comment.pk }}">
+                    {% endif %}
+                {% else %}
+                    {% if comment.is_correct == True %}
+                        <input class="form-check-input js-correct" type="checkbox" id="is_correct-{{ comment.pk }}"
+                               data-id="{{ comment.pk }}" checked disabled>
+                    {% else %}
+                        <input class="form-check-input js-correct" type="checkbox" id="is_correct-{{ comment.pk }}"
+                               data-id="{{ comment.pk }}" disabled>
+                    {% endif %}
+                {% endif %}
+                <label class="form-check-label" for="is_correct-{{ comment.pk }}">
                     Correct!
                 </label>
             </div>

@@ -1,7 +1,20 @@
 {% extends "include/base.html" %}
+{% load bootstrap4 %}
 {% load static %}
 
 {% block content %}
+<br><h2>Sign up</h2>
+
+<form class="form mt-5" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Sign up</button>
+    {% endbuttons %}
+</form>
+{% endblock content %}
+
+<!--
     <h2 class="caption">Sign Up</h2>
     <form class="needs-validation" novalidate>
         <div class="mb-3">
@@ -48,4 +61,4 @@
             Register!
         </button>
     </form>
-{% endblock %}
+-->

@@ -21,31 +21,30 @@
                 </li>
             </ul>
 
+            {% if request.user.is_authenticated %}
+            <div class="col-1">
+                <img src="{{ request.user.profile.avatar.url }}" class="rounded img-fluid" width="48" height="48" alt="avatar">
+            </div>
+            <div class="col-2">
+                <div class="col question-tags">
+                    <div style="color: white;">
+                        <h5 class="user-name-bar">{{ user.username }}</h5>
+                    </div>
+                </div>
 
+                <div class="col">
+                    <a class="question-tags" href="{% url 'settings' %}">settings</a>
+                    <a class="question-tags" href="{% url 'logout' %}">log out</a>
+                </div>
+            </div>
+            {% else %}
             <div class="col-1">
                 <a href="{% url 'login' %}">log in</a>
             </div>
             <div class="col-2">
                 <a href="{% url 'signup' %}">register</a>
             </div>
-
-            <!--
-            Для залогированных юзеров
-            <div class="col-1">
-                <img src="{% static 'img/avatar.png' %}" class="rounded img-fluid" width="48" height="48" alt="avatar">
-            </div>
-            <div class="col-2">
-                <div class="col question-tags">
-                    <div style="color: white;">
-                        <h5 class="user-name-bar">Edin Kasupovich</h5>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <a class="question-tags" href="{% url 'personal_page' %}">Settings</a>
-                </div>
-            </div>
-            -->
+            {% endif %}
         </div>
     </nav>
 </header>

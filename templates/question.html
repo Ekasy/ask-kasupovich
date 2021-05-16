@@ -1,4 +1,5 @@
 {% extends "include/base.html" %}
+{% load bootstrap4 %}
 {% load static %}
 
 {% block content %}
@@ -7,14 +8,16 @@
     <div class="col-3">
         <img src="{% static 'img/avatar.png' %}">
         <div class="row question-rating">
-            <div class="col-7 count">
+            <div class="col-7 count" id="question-{{ question.id }}">
                 {{ question.rating }}
             </div>
             <div class="col-5 regs">
-                <input type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}" alt="submit"
-                       width="15" height="15">
-                <input type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}" alt="submit" width="15"
-                       height="15">
+                <input class="js-vote" type="image" name="down" src="{% static 'img/arrow-down-short.svg' %}"
+                       alt="submit" width="15" height="15"
+                       data-action="dislike" data-id="{{ question.id }}" data-content="question">
+                <input class="js-vote" type="image" name="up" src="{% static 'img/arrow-up-short.svg' %}"
+                       alt="submit" width="15" height="15"
+                       data-action="like" data-id="{{ question.id }}" data-content="question">
             </div>
         </div>
     </div>
@@ -55,18 +58,16 @@
 
 <hr class="mb-4">
 
-<!-- your comment area -->
-<form class="needs-validation" novalidate>
-    <div class="mb-4">
-        <textarea class="form-control" id="textarea" rows="3" placeholder="Enter your answer here." required></textarea>
-        <div class="invalid-feedback">
-            Please, enter a text.
-        </div>
-    </div>
-    <button class="btn btn-primary btn-lg btn-block" type="submit">
-        Answer
-    </button>
+<!-- comment area -->
+{% if request.user.is_authenticated %}
+<form class="form md-5" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button class="btn btn-primary" type="submit">Answer</button>
+    {% endbuttons %}
 </form>
-
-
+{% else %}
+<p>Only registered users can comment. <a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">Create account</a>.</p>
+{% endif %}
 {% endblock content %}
