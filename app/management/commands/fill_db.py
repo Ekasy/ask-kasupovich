@@ -1,3 +1,5 @@
+import random
+
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from app.models import *
@@ -16,16 +18,27 @@ class Command(BaseCommand):
 
     def create_tags(self, fake, tags_num):
         for _ in range(tags_num):
-            tag = Tag(tag=fake.word())
-            tag.save()
+            while True:
+                tagname = fake.word() + " " + fake.word()
+                try:
+                    exist_tag = Tag.objects.get(tag=tagname)
+                except Tag.DoesNotExist:
+                    tag = Tag(tag=tagname)
+                    tag.save()
+                    break
 
     def create_users(self, fake, users_num):
         for _ in range(users_num):
-            uname = fake.user_name()
-            user = User(username=uname, password=fake.password(), email=fake.email())
-            user.save()
-            prfl = Profile(user=user, nickname=uname, avatar='../../../static/img/avatar.png')
-            prfl.save()
+            while True:
+                uname = fake.user_name() + str(random.randint(1, 1000))
+                try:
+                    exist_user = User.objects.get(username=uname)
+                except User.DoesNotExist:
+                    user = User(username=uname, password=fake.password(), email=fake.email())
+                    user.save()
+                    prfl = Profile(user=user, nickname=uname)
+                    prfl.save()
+                    break
 
     def create_questions(self, fake, questions_num):
         profile_id = Profile.objects.values_list('id', flat=True)
@@ -66,18 +79,18 @@ class Command(BaseCommand):
         users_num = users.count()
         for _ in range(users_num):
             for _ in range(questions_num):
-                if randint(0, 1) == 1:
-                    question_id = randint(1, questions_num)
-                    try:
-                        like = Like(content_object=Question.objects.get(pk=question_id),
-                                    vote=1,
-                                    user=User.objects.get(pk=randint(1, users_num)))
-                        question = Question.objects.get(pk=question_id)
-                        question.rating += 1
-                        question.save()
-                        like.save()
-                    except IntegrityError:
-                        pass
+                rand_like = 1 if randint(0, 1) == 1 else -1
+                question_id = randint(1, questions_num)
+                try:
+                    like = Like(content_object=Question.objects.get(pk=question_id),
+                                vote=rand_like,
+                                user=User.objects.get(pk=randint(1, users_num)))
+                    question = Question.objects.get(pk=question_id)
+                    question.rating += rand_like
+                    question.save()
+                    like.save()
+                except IntegrityError:
+                    pass
 
     def handle(self, *args, **options):
         fake = Faker()

@@ -2,7 +2,7 @@
 
 <div class="row question">
     <div class="col-3">
-        <img src="{% static 'img/avatar.png' %}">
+        <img src="{{ question.profile.avatar.url }}">
         <div class="row question-rating">
             <div class="col-7 count" id="question-{{ question.id }}">
                 {{ question.rating }}
